@@ -60,10 +60,21 @@ bash litter.sh
 ```
 
 You will be asked at every step to proceed or not. Just answer with Y/y or N/n. Every other input signals the tool to exit.
-## LOGS
+## Logs
 
 Every time the tool is run, a log file will be created in the folder "logs" within the litter folder.
 The filepath should look like this: "litter/logs/old_asset_id_<your_old_AssetID>.log"
 
 Here you can find all the information that you need for the new Tokens if you missed it in the CLI Output. Aswell as the new AssetID of the CAT2. Make sure to make a backup of this file.
 
+## Thank you
+
+A big thank you to https://github.com/WarutaShinken for helping me getting the CAT-admin-tool to run. Also for the fixes in my code.
+
+If you want to help my buddy keep up his good work, consider buying him a beer:
+CHIA Address xch1y46v09x3r77hv2560nw279lpxkg4dsq69d6sz5m9muuurwgrd6hqlpvm2y
+
+##
+
+If you found this tool to help you, consider buying me a beer, or a beer factory, I am not your supervisor!
+CHIA Address xch1ac74hll6w0ldmrpx3eldhxdck6e4hfyhdw5z8dt8seanfldyj0sqfna064
