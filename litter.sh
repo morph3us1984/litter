@@ -2,7 +2,7 @@
 ############################ Config Area ####
 wallet_fingerprint="1234567890"
 wallet_id="1"
-fee="1000" #Fees in Mojo
+fee="10000" #Fees in Mojo
 mojos_wallet_minimum="0" #
 ############################ Config Area End ####
 token_endsum="0"
@@ -49,7 +49,7 @@ function cat_admin_activate {
   cd -
 }
 function check_chia_sync {
-  
+
 
   #Chia Blockchain synced status
 
@@ -94,7 +94,7 @@ function main_logic {
     #rm $HOME/litter/logs/old_asset_id_$asset_id.log
     filename=$(ls -1 $HOME/litter/chia-cat1-snapshot/cat1_csv_files/ | grep $asset_id)
     echo $filename >> $HOME/litter/logs/old_asset_id_$asset_id.log
-    selected_coin=$(cats --tail $HOME/litter/CAT-admin-tool/reference_tails/genesis_by_coin_id.clsp.hex --send-to xch1ac74hll6w0ldmrpx3eldhxdck6e4hfyhdw5z8dt8seanfldyj0sqfna064 --amount $total_amount --as-bytes --select-coin | grep "Name:" | cut -d ":" -f 2 | cut -d " " -f 2)
+    selected_coin=$(cats --tail $HOME/litter/CAT-admin-tool/reference_tails/genesis_by_coin_id.clsp.hex -f $wallet_fingerprint --send-to xch1ac74hll6w0ldmrpx3eldhxdck6e4hfyhdw5z8dt8seanfldyj0sqfna064 --amount $total_amount --as-bytes --select-coin | grep "Name:" | cut -d ":" -f 2 | cut -d " " -f 2)
     echo "Selected Coin: \"$selected_coin\"" >> $HOME/litter/logs/old_asset_id_$asset_id.log
     selected_coin_hex=$(echo "0x$selected_coin")
     echo "Selected Coin in HEX: \"$selected_coin_hex\"" >> $HOME/litter/logs/old_asset_id_$asset_id.log
@@ -104,14 +104,14 @@ function main_logic {
     root_address=$(echo "$root_puzzle_hash_and_address" | grep "address:" | cut -d ":" -f 2 | cut -d " " -f 2 )
     echo "Root puzzle hash: \"$root_puzzle_hash\"" >> $HOME/litter/logs/old_asset_id_$asset_id.log
     echo "Root puzzle address: \"$root_address\"" >> $HOME/litter/logs/old_asset_id_$asset_id.log
-    push_to_network=$(yes | cats --tail $HOME/litter/CAT-admin-tool/reference_tails/genesis_by_coin_id.clsp.hex --send-to $root_address --amount $total_amount --as-bytes --curry $selected_coin_hex --fee $fee)
+    push_to_network=$(yes | cats --tail $HOME/litter/CAT-admin-tool/reference_tails/genesis_by_coin_id.clsp.hex -f $wallet_fingerprint --send-to $root_address --amount $total_amount --as-bytes --curry $selected_coin_hex --fee $fee)
     echo "$push_to_network" >> $HOME/litter/logs/old_asset_id_$asset_id.log
     new_asset_id=$(echo "$push_to_network" | grep "Asset ID:" | cut -d ":" -f 2 | cut -d " " -f 2 )
     echo "CAT2 s new Asset ID: \"$new_asset_id\"" >> $HOME/litter/logs/old_asset_id_$asset_id.log
     eve_coin_id=$(echo "$push_to_network" | grep "Coin ID:" | cut -d ":" -f 2 | cut -d " " -f 2 )
     echo "Eve Coin ID: \"$eve_coin_id\"" >> $HOME/litter/logs/old_asset_id_$asset_id.log
     echo "This File will be used: $HOME/litter/chia-cat1-snapshot/cat1_csv_files/$filename"
-    unwind_the_bag=$(unwind_the_bag --eve-coin-id $eve_coin_id --tail-hash $new_asset_id --secure-the-bag-targets-path $HOME/litter/chia-cat1-snapshot/cat1_csv_files/$filename --unwind-fee $fee --wallet-id 1)
+    unwind_the_bag=$(unwind_the_bag --eve-coin-id $eve_coin_id --tail-hash $new_asset_id --secure-the-bag-targets-path $HOME/litter/chia-cat1-snapshot/cat1_csv_files/$filename -f $wallet_fingerprint --unwind-fee $fee --wallet-id 1)
     echo "$unwind_the_bag" >> $HOME/litter/logs/old_asset_id_$asset_id.log
     temp_token_issued="0"
     ((temp_token_issued=total_amount/1000))
@@ -163,7 +163,7 @@ function main_logic {
           case $ynchia in
             [yY] ) echo -e "Installing Chia 1.6.0...\n";
               cd ~
-              git clone https://github.com/Chia-Network/chia-blockchain -b 1.6.0 && cd chia-blockchain && sh install.sh && . ./activate && chia init && chia init --fix-ssl-permissions
+              git clone https://github.com/Chia-Network/chia-blockchain -b 1.5.0 && cd chia-blockchain && sh install.sh && . ./activate && chia init && chia init --fix-ssl-permissions
                 while true; do
                   echo -e "Do you want Chia to create a new random key?\n\n";
                   read -p "([yY]/[nN]) " ynkey
@@ -212,7 +212,40 @@ function main_logic {
 
 
 #CAT Admin Tool detection and install
-  DIR="$HOME/litter/CAT-admin-tool"
+  # DIR="$HOME/litter/CAT-admin-tool"
+  # if [ -d "$DIR" ]; then
+  #   echo "${DIR} detected..."
+  # else
+  #     while true; do
+  #       echo -e "Error: No ${DIR} folder detected in Home dir.\n\nDo you want to install CAT-admin-tool?\n"
+  #       read -p "([yY]/[nN]) " yncat
+  #       case $yncat in 
+  #         [yY] ) echo "downloading Snapshot...";
+  #           cd ~/litter
+  #           git clone https://github.com/morph3us1984/CAT-admin-tool.git -b main
+  #           cd ~/litter/CAT-admin-tool
+  #           python3 -m venv venv #FIX
+  #           . ./venv/bin/activate
+  #           python3 -m pip install --upgrade pip setuptools wheel click #FIX
+  #           pip install .
+  #           pip install chia-dev-tools --no-deps
+  #           pip install pytest
+  #           pip install chia-blockchain==1.5.0
+  #           pip install pytest-asyncio
+  #           pip install pytimeparse
+  #           cats --help
+  #           cdv --help
+  #           echo -e "\nInstalled CAT-admin-tool successfully!\n\n"
+  #           break;;
+  #         [nN] ) echo "Cannot continue without Cat-admin-tool, please download manualy";
+  #           exit;;
+  #         * ) echo "invalid response; exiting"; 
+  #           exit;;
+  #       esac
+  #     done
+  # fi
+#testing a different version of CAT-admin-tool
+DIR="$HOME/litter/CAT-admin-tool"
   if [ -d "$DIR" ]; then
     echo "${DIR} detected..."
   else
@@ -222,15 +255,16 @@ function main_logic {
         case $yncat in 
           [yY] ) echo "downloading Snapshot...";
             cd ~/litter
-            git clone https://github.com/morph3us1984/CAT-admin-tool.git -b main
+            git clone https://github.com/Chia-Network/CAT-admin-tool -b main
             cd ~/litter/CAT-admin-tool
+            git reset --hard 1bd6535a189047881df62ed2f57fc6924c0abf51
             python3 -m venv venv #FIX
             . ./venv/bin/activate
             python3 -m pip install --upgrade pip setuptools wheel click #FIX
             pip install .
             pip install chia-dev-tools --no-deps
             pip install pytest
-            pip install chia-blockchain==1.6.0
+            pip install chia-blockchain==1.5.0
             pip install pytest-asyncio
             pip install pytimeparse
             cats --help
@@ -244,6 +278,16 @@ function main_logic {
         esac
       done
   fi
+#Fingerprint check
+    if [ "$wallet_fingerprint" == "" ]
+    then
+        echo "Wallet Fingerprint is not set!"
+        exit
+    if [ "$wallet_fingerprint" == "1234567890" ]
+    then
+        echo "You forgot to set your Wallet Fingerprint!"
+        exit
+    fi
 
 #Old AssetIDs check and Calculations
   assetidfile="$HOME/litter/assetids.txt"
