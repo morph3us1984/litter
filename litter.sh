@@ -255,9 +255,8 @@ DIR="$HOME/litter/CAT-admin-tool"
         case $yncat in 
           [yY] ) echo "downloading Snapshot...";
             cd ~/litter
-            git clone https://github.com/Chia-Network/CAT-admin-tool -b main
+            https://github.com/morph3us1984/CAT-admin-tool
             cd ~/litter/CAT-admin-tool
-            git reset --hard 1bd6535a189047881df62ed2f57fc6924c0abf51
             python3 -m venv venv #FIX
             . ./venv/bin/activate
             python3 -m pip install --upgrade pip setuptools wheel click #FIX
