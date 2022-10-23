@@ -279,16 +279,14 @@ DIR="$HOME/litter/CAT-admin-tool"
       done
   fi
 #Fingerprint check
-    if [ "$wallet_fingerprint" == "" ]
-    then
+    if [ "$wallet_fingerprint" == "" ] ; then
         echo "Wallet Fingerprint is not set!"
         exit
-    if [ "$wallet_fingerprint" == "1234567890" ]
-    then
+    fi
+    if [ "$wallet_fingerprint" == "1234567890" ] ; then
         echo "You forgot to set your Wallet Fingerprint!"
         exit
     fi
-
 #Old AssetIDs check and Calculations
   assetidfile="$HOME/litter/assetids.txt"
   if [[ -s $assetidfile ]] ; then
