@@ -1,6 +1,4 @@
 
-# Project Title
-
 # litter
 
 Litter is a CAT1 re-issue tool to make the transition from CAT1 to CAT2 standard super easy! It uses Chias CAT1 Snaphshot, Chia CAT-admin-tool and a Chia Node+Wallet. All of these can be installed within the tool automatically. No need to do it seperately, though I recommend having the Chia Node/wallet already installed. Otherwise it will take the Chia Node days to get synced.
@@ -11,7 +9,7 @@ Litter is a CAT1 re-issue tool to make the transition from CAT1 to CAT2 standard
 ## Requirements
 
 - Ubuntu 20.04
-OR
+- OR
 - Windows 10 / 11 with WSL (running Ubuntu 20.04)
 - Synced Chia Full Node
 - Synced Chia Wallet
