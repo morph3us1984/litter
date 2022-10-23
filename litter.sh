@@ -3,8 +3,8 @@
 wallet_fingerprint="1234567890"
 wallet_id="1"
 fee="10000" #Fees in Mojo
-mojos_wallet_minimum="0" #
 ############################ Config Area End ####
+mojos_wallet_minimum="0"
 token_endsum="0"
 how_many_lines="0"
 cd ~/litter
