@@ -10,7 +10,7 @@ CAUTION: Though I tested this tool as good as I could, there is still a risk tha
 
 - Ubuntu 20.04
 - OR
-- Windows 10 / 11 with WSL (running Ubuntu 20.04)
+- Windows 10 / 11 with WSL (running Ubuntu 20.04). Chia has to be installed inside Ubuntu.
 - Synced Chia Full Node
 - Synced Chia Wallet
 
