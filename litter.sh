@@ -37,7 +37,7 @@ touch $HOME/litter/temp/token_sums.txt
   cd ~
   echo -e "Installing/Updating dependencies\n"
   echo -e "Your sudo password might be needed:\n\n"
-  sudo apt install git python3 build-essential python3-dev python3-venv -y #FIX
+  sudo apt install unzip git python3 build-essential python3-dev python3-venv -y #FIX
 function chia_activate {
   cd $HOME/chia-blockchain
   . ./activate
