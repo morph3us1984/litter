@@ -255,7 +255,7 @@ DIR="$HOME/litter/CAT-admin-tool"
         case $yncat in 
           [yY] ) echo "downloading Snapshot...";
             cd ~/litter
-            https://github.com/morph3us1984/CAT-admin-tool
+            git clone https://github.com/morph3us1984/CAT-admin-tool
             cd ~/litter/CAT-admin-tool
             python3 -m venv venv #FIX
             . ./venv/bin/activate
