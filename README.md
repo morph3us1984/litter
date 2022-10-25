@@ -42,7 +42,7 @@ Either copy the DB from your already running Node or you can download a near up-
 
 ### Additional WSL steps
 
-If you are using WSL I recommend placing this DB in C:\temp\chia-db\blockchain_v2_mainnet.sqlite and to change the config.yaml accordingly. You will have to create the folder "temp" or use a 
+If you are using WSL I recommend placing this DB in C:\temp\chia-db\blockchain_v2_mainnet.sqlite and to change the config.yaml accordingly. You will have to create the folder "temp" or use a different path. WSL has to have access to that folder though.
 
 Open the config file with your favorite text editor:
 ```bash
