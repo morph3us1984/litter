@@ -111,7 +111,9 @@ function main_logic {
     eve_coin_id=$(echo "$push_to_network" | grep "Coin ID:" | cut -d ":" -f 2 | cut -d " " -f 2 )
     echo "Eve Coin ID: \"$eve_coin_id\"" >> $HOME/litter/logs/old_asset_id_$asset_id.log
     echo "This File will be used: $HOME/litter/chia-cat1-snapshot/cat1_csv_files/$filename"
-    echo "ATTENTION! The last unwind the bag command to re-issue the CATs will take some time.\n It could take several minutes to 30 minutes and more depending on the amount of Tokens\n Please do not close this Terminal Window or kill the tool or your Mojos will be lost!"" 
+    echo "ATTENTION! The last unwind the bag command to re-issue the CATs will take some time."
+    echo "It could take several minutes to hours, depending on the amount of Tokens"
+    echo "Please do not close this Terminal Window or kill the tool using CTRL+c or your Mojos will be lost!"" 
     unwind_the_bag=$(unwind_the_bag --eve-coin-id $eve_coin_id --tail-hash $new_asset_id --secure-the-bag-targets-path $HOME/litter/chia-cat1-snapshot/cat1_csv_files/$filename -f $wallet_fingerprint --unwind-fee $fee --wallet-id 1)
     echo "$unwind_the_bag" >> $HOME/litter/logs/old_asset_id_$asset_id.log
     temp_token_issued="0"
