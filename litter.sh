@@ -94,7 +94,21 @@ function check_chia_sync {
 }
 function main_logic {
   while IFS= read -r line; do
+    #Resetting all variables
+    selected_coin=""
+    selected_coin_hex=""
+    root_address=""
+    root_puzzle_hash=""
+    root_puzzle_hash_and_address=""
+    push_to_network=""
+    new_asset_id=""
+    eve_coin_id=""
+    unwind_the_bag=""
+    temp_token_issued="0"
+    ##########################
+    # Chia sync and wallet check before re-issue
     check_chia_sync
+    ##########################
     asset_id=$(echo $line | cut -d "," -f 1 )
     total_amount=$(echo $line | cut -d "," -f 2 )
     #rm $HOME/litter/logs/old_asset_id_$asset_id.log
@@ -120,10 +134,9 @@ function main_logic {
     echo "ATTENTION! The last unwind the bag command to re-issue the CATs will take some time."
     echo "It could take several minutes to hours, depending on the amount of Tokens"
     echo "Please do not close this Terminal Window or kill the tool using CTRL+c or your Mojos will be lost!" 
-    #sleep 120
     unwind_the_bag=$(unwind_the_bag --eve-coin-id $eve_coin_id --tail-hash $new_asset_id --secure-the-bag-targets-path $HOME/litter/chia-cat1-snapshot/cat1_csv_files/$filename -f $wallet_fingerprint --unwind-fee $fee --wallet-id 1)
     echo "$unwind_the_bag" >> $HOME/litter/logs/old_asset_id_$asset_id.log
-    temp_token_issued="0"
+    sleep 120
     ((temp_token_issued=total_amount/1000))
     echo -e "\t######### SUMMARY ##########" >> $HOME/litter/logs/old_asset_id_$asset_id.log
     echo -e "\tOld CAT1 Token AssetID:\t $asset_id" >> $HOME/litter/logs/old_asset_id_$asset_id.log
