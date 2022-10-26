@@ -119,7 +119,7 @@ function main_logic {
     echo "This File will be used: $HOME/litter/chia-cat1-snapshot/cat1_csv_files/$filename"
     echo "ATTENTION! The last unwind the bag command to re-issue the CATs will take some time."
     echo "It could take several minutes to hours, depending on the amount of Tokens"
-    echo "Please do not close this Terminal Window or kill the tool using CTRL+c or your Mojos will be lost!"" 
+    echo "Please do not close this Terminal Window or kill the tool using CTRL+c or your Mojos will be lost!" 
     sleep 120
     unwind_the_bag=$(unwind_the_bag --eve-coin-id $eve_coin_id --tail-hash $new_asset_id --secure-the-bag-targets-path $HOME/litter/chia-cat1-snapshot/cat1_csv_files/$filename -f $wallet_fingerprint --unwind-fee $fee --wallet-id 1)
     echo "$unwind_the_bag" >> $HOME/litter/logs/old_asset_id_$asset_id.log
