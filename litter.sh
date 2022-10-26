@@ -86,6 +86,11 @@ function check_chia_sync {
           echo  -e "${YELLOW}SEND Wallet not ready...not enough spendable balance${DEFAULT}"
           sleep 10s
   done
+  until [ "`chia rpc wallet get_wallet_balance '{"wallet_id": '$wallet_id'}' | grep "spendable_balance" | cut -d ":" -f 2 | cut -d " " -f2 | cut -d "," -f1`" == "`chia rpc wallet get_wallet_balance '{"wallet_id": '$wallet_id'}' | grep -m 1 "confirmed_wallet_balance" | cut -d ":" -f 2 | cut -d " " -f2 | cut -d "," -f1`" ]
+  do
+        echo  -e "${YELLOW}SEND Wallet not ready...${NC}"
+        sleep 20s
+  done
 }
 function main_logic {
   while IFS= read -r line; do
