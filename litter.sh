@@ -88,7 +88,7 @@ function check_chia_sync {
   done
   until [ "`chia rpc wallet get_wallet_balance '{"wallet_id": '$wallet_id'}' | grep "spendable_balance" | cut -d ":" -f 2 | cut -d " " -f2 | cut -d "," -f1`" == "`chia rpc wallet get_wallet_balance '{"wallet_id": '$wallet_id'}' | grep -m 1 "confirmed_wallet_balance" | cut -d ":" -f 2 | cut -d " " -f2 | cut -d "," -f1`" ]
   do
-        echo  -e "${YELLOW}SEND Wallet not ready...${NC}"
+        echo  -e "${YELLOW}SEND Wallet not ready...Spendable Balance is not the same as Total Balance${NC}"
         sleep 20s
   done
 }
@@ -120,7 +120,7 @@ function main_logic {
     echo "ATTENTION! The last unwind the bag command to re-issue the CATs will take some time."
     echo "It could take several minutes to hours, depending on the amount of Tokens"
     echo "Please do not close this Terminal Window or kill the tool using CTRL+c or your Mojos will be lost!" 
-    sleep 120
+    #sleep 120
     unwind_the_bag=$(unwind_the_bag --eve-coin-id $eve_coin_id --tail-hash $new_asset_id --secure-the-bag-targets-path $HOME/litter/chia-cat1-snapshot/cat1_csv_files/$filename -f $wallet_fingerprint --unwind-fee $fee --wallet-id 1)
     echo "$unwind_the_bag" >> $HOME/litter/logs/old_asset_id_$asset_id.log
     temp_token_issued="0"
